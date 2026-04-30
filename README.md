@@ -163,8 +163,8 @@ pip install -r requirements.txt
 Open `fast_app.py` and find these two lines near the top:
 
 ```python
-GROQ_API_KEY = "your_groq_api_key_here"
-NEWS_API_KEY = "your_newsapi_key_here"
+GROQ_API_KEY = "your api key"
+NEWS_API_KEY = "your api key"
 ```
 
 Replace with your actual keys:

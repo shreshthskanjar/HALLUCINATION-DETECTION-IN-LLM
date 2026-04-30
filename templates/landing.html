@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FACTRA — AI Hallucination Detector</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="{{ url_for('static', filename='theme.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="#" class="navbar-brand">FACT<span>RA</span></a>
+  <div class="navbar-links">
+    <a href="#features">Features</a>
+    <a href="#how">How it works</a>
+    <a href="/login">Sign in</a>
+    <a href="/register" class="nav-cta">Get started free →</a>
+
+    <!-- THEME TOGGLE -->
+    <div class="theme-toggle">
+      <button class="theme-toggle-btn" data-theme="dark" onclick="toggleTheme('dark')">DARK</button>
+      <button class="theme-toggle-btn" data-theme="light" onclick="toggleTheme('light')">LIGHT</button>
+    </div>
+
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-badge fade-up">Live hallucination detection</div>
+    <h1 class="fade-up delay-1">Stop trusting <em>AI blindly.</em></h1>
+    <p class="hero-sub fade-up delay-2">
+      FACTRA cross-checks AI responses from ChatGPT, Gemini, Claude, and more
+      against 5 real-time sources — and highlights exactly what's wrong, word by word.
+    </p>
+    <div class="hero-actions fade-up delay-3">
+      <a href="/register" class="btn-primary">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        Start detecting free
+      </a>
+      <a href="#how" class="btn-secondary">See how it works</a>
+    </div>
+  </div>
+
+  <!-- DEMO CARD -->
+  <div class="hero-card fade-up delay-4">
+    <div class="hero-card-label">Live example</div>
+    <div class="hero-card-prompt">
+      💬 &nbsp;"Who was Dr. James Whitmore, the physicist who discovered the Whitmore Effect?"
+    </div>
+    <div class="hero-card-response">
+      Dr. James Whitmore was a <mark>self-taught physicist</mark> from <mark>Surrey, England</mark>, who in <mark>1973</mark> claimed to have discovered the <mark>"Whitmore Effect"</mark> — the ability to influence <mark>thermal conductivity at a distance</mark>. He later won a <mark>Nobel Prize</mark> for his work.
+    </div>
+    <div class="hero-result">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Hallucination detected — 94% severity
+    </div>
+    <div class="hero-sentences">
+      <div class="hero-sentence bad">✗ "Dr. James Whitmore" — no record exists in any scientific database</div>
+      <div class="hero-sentence bad">✗ "Whitmore Effect" — not a recognized scientific term</div>
+      <div class="hero-sentence bad">✗ Nobel Prize claim — no laureate by this name found</div>
+      <div class="hero-sentence good">✓ Surrey, England — valid location (but unverifiable claim)</div>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES STRIP -->
+<div class="divider-label">Cross-checked against 5 real-time sources</div>
+<div class="logo-strip">
+  <div class="logo-strip-grid">
+
+    <!-- Wikipedia -->
+    <div class="logo-pill">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="#888" stroke-width="1.5"/>
+        <path d="M8 8l2 8 2-4 2 4 2-8" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Wikipedia
+    </div>
+
+    <!-- DuckDuckGo -->
+    <div class="logo-pill">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <circle cx="11" cy="11" r="7" stroke="#888" stroke-width="1.5"/>
+        <path d="M16.5 16.5L21 21" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="9" cy="10" r="1" fill="#888"/>
+        <circle cx="13" cy="10" r="1" fill="#888"/>
+        <path d="M9 13.5s1 1.5 3 1.5 3-1.5 3-1.5" stroke="#888" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      DuckDuckGo
+    </div>
+
+    <!-- NewsAPI -->
+    <div class="logo-pill">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="5" width="18" height="14" rx="2" stroke="#888" stroke-width="1.5"/>
+        <path d="M7 9h10M7 12h7M7 15h5" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      NewsAPI
+    </div>
+
+    <!-- Wikidata -->
+    <div class="logo-pill">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="3" width="4" height="18" rx="1" stroke="#888" stroke-width="1.5"/>
+        <rect x="10" y="7" width="4" height="14" rx="1" stroke="#888" stroke-width="1.5"/>
+        <rect x="17" y="11" width="4" height="10" rx="1" stroke="#888" stroke-width="1.5"/>
+      </svg>
+      Wikidata
+    </div>
+
+    <!-- Open Library -->
+    <div class="logo-pill">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M4 19V6a2 2 0 012-2h12a2 2 0 012 2v13" stroke="#888" stroke-width="1.5"/>
+        <path d="M4 19h16" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M9 10h6M9 13h4" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      Open Library
+    </div>
+
+  </div>
+</div>
+
+<!-- LLM STRIP -->
+<div class="divider-label" style="padding-top:0">Detect hallucinations from these AI models</div>
+<div class="llm-strip">
+  <div class="llm-grid">
+
+    <div class="llm-card">
+      <div class="llm-icon" style="background:#1a1a2e">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" width="28" height="28" style="border-radius:6px;">
+      </div>
+      ChatGPT
+    </div>
+
+    <div class="llm-card">
+      <div class="llm-icon" style="background:#1a1a2e">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlegemini.svg" width="24" height="24" style="filter:invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg); border-radius:6px;">
+      </div>
+      Gemini
+    </div>
+
+    <div class="llm-card">
+      <div class="llm-icon" style="background:#1a1a2e">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Claude_AI_logo.svg" width="28" height="28" style="border-radius:6px; background:#cc785c; padding:3px;">
+      </div>
+      Claude
+    </div>
+
+    <div class="llm-card">
+      <div class="llm-icon" style="background:#1a1a2e">
+        <img src="https://ollama.com/public/ollama.png" width="28" height="28" style="border-radius:6px;">
+      </div>
+      Ollama
+    </div>
+
+    <div class="llm-card">
+      <div class="llm-icon" style="background:#1a1a2e">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Meta-Logo.png" width="28" height="28" style="border-radius:6px; object-fit:cover;">
+      </div>
+      Llama
+    </div>
+
+    
+
+    <div class="llm-card">
+      <div class="llm-icon" style="background:#1a1a2e">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2" stroke="#f72585" stroke-width="2"/><rect x="13" y="3" width="8" height="8" rx="2" stroke="#f72585" stroke-width="2"/><rect x="3" y="13" width="8" height="8" rx="2" stroke="#f72585" stroke-width="2"/><rect x="13" y="13" width="8" height="8" rx="2" stroke="#f72585" stroke-width="2"/></svg>
+      </div>
+      Any LLM
+    </div>
+
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="features-header">
+    <h2>Everything you need to <em style="color:var(--accent);font-style:normal">fact-check AI</em></h2>
+    <p>Built for researchers, students, developers, and anyone who uses AI daily.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🖍️</div>
+      <h3>Word-level highlighting</h3>
+      <p>Every hallucinated word is highlighted in red — not just flagged at the sentence level. See exactly what's wrong.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Results in seconds</h3>
+      <p>Powered by Groq's ultra-fast inference. Get a full hallucination report in 2–4 seconds, not minutes.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌐</div>
+      <h3>5 real-time sources</h3>
+      <p>Wikipedia, DuckDuckGo, NewsAPI, Wikidata, and Open Library — all cross-checked automatically.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📜</div>
+      <h3>Detection history</h3>
+      <p>Every check is saved to your personal history. Review, compare, and track AI accuracy over time.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Severity scoring</h3>
+      <p>Each response gets a severity score from 0–100%. Know at a glance how bad the hallucination is.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔐</div>
+      <h3>Personal accounts</h3>
+      <p>Login to your own account. Your history is private — no one else can see your detections.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="how-header">
+    <h2>How FACTRA works</h2>
+    <p>From paste to result in under 5 seconds.</p>
+  </div>
+  <div class="how-steps">
+    <div class="how-step">
+      <div class="how-step-num">1</div>
+      <h4>Paste your prompt</h4>
+      <p>Enter the question you asked the AI model.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-step-num">2</div>
+      <h4>Paste the response</h4>
+      <p>Copy the AI's answer and paste it into FACTRA.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-step-num">3</div>
+      <h4>Sources are fetched</h4>
+      <p>FACTRA pulls real-time context from 5 trusted sources automatically.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-step-num">4</div>
+      <h4>Get your report</h4>
+      <p>Hallucinated words, sentences, claims, and a severity score — instantly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-card">
+    <h2>Ready to stop trusting <em>AI blindly?</em></h2>
+    <p>Join FACTRA and start detecting hallucinations in seconds. Free to use, no credit card required.</p>
+    <div class="cta-actions">
+      <a href="/register" class="btn-primary">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        Get started free
+      </a>
+      <a href="/login" class="btn-secondary">Sign in</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">FACT<span>RA</span></div>
+  <p>Built with Flask · Groq · 5 real-time sources · SQLite</p>
+  <p style="font-size:12px;color:var(--text3)">© 2025 FACTRA</p>
+</footer>
+
+</body>
+</html>

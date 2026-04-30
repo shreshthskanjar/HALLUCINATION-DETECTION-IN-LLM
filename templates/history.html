@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>History — FACTRA</title>
+  <script src="{{ url_for('static', filename='theme.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="{{ url_for('index') }}" class="navbar-brand">FACT<span>RA</span></a>
+  <div class="navbar-links">
+    <a href="{{ url_for('index') }}" class="active">Detect</a>
+    <a href="{{ url_for('history') }}">History</a>
+    <a href="{{ url_for('logout') }}" class="nav-logout">Logout · {{ current_user.username }}</a>
+
+    <!-- THEME TOGGLE -->
+    <div class="theme-toggle">
+      <button class="theme-toggle-btn" data-theme="dark" onclick="toggleTheme('dark')">DARK</button>
+      <button class="theme-toggle-btn" data-theme="light" onclick="toggleTheme('light')">LIGHT</button>
+    </div>
+
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="page-header">
+    <h1>Detection History</h1>
+    <p>All your past hallucination checks, most recent first.</p>
+  </div>
+
+  {% if not detections %}
+  <div class="empty-state">
+    <h3>No detections yet</h3>
+    <p>Head over to <a href="{{ url_for('index') }}">Detect</a> and run your first check.</p>
+  </div>
+  {% endif %}
+
+  {% for d in detections %}
+  <div class="history-card">
+
+    <div class="history-meta">
+      <span class="history-time">{{ d.timestamp }}</span>
+      <a href="{{ url_for('delete_detection', detection_id=d.id) }}"
+         class="delete-btn"
+         onclick="return confirm('Delete this detection?')">Delete</a>
+    </div>
+
+    {% if d.hallucination_detected %}
+      <div class="result-banner detected" style="margin-bottom:12px">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Hallucination Detected
+        <span style="font-size:13px;font-weight:400;margin-left:auto">{{ "%.0f"|format(d.severity * 100) }}% severity</span>
+      </div>
+    {% else %}
+      <div class="result-banner clean" style="margin-bottom:12px">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        No Hallucinations
+        <span style="font-size:13px;font-weight:400;margin-left:auto">{{ "%.0f"|format(d.severity * 100) }}% severity</span>
+      </div>
+    {% endif %}
+
+    <div style="margin-bottom:14px">
+      <div class="severity-track">
+        <div class="severity-fill" style="width:{{ "%.0f"|format(d.severity * 100) }}%"></div>
+      </div>
+    </div>
+
+    <div class="history-prompt">{{ d.prompt }}</div>
+
+    {% if d.summary %}
+    <div class="summary-box" style="margin:12px 0">
+      <strong style="color:#a8d8ff">Summary:</strong> {{ d.summary }}
+    </div>
+    {% endif %}
+
+    {% if d.highlighted_response %}
+    <div class="section-title">Highlighted response</div>
+    <div class="highlighted-box" style="margin-bottom:14px">{{ d.highlighted_response | safe }}</div>
+    {% endif %}
+
+    {% if d.sentences %}
+    <div class="section-title">Sentence analysis</div>
+    {% for s in d.sentences %}
+      <div class="sentence-block {{ 'hallucinated' if s.hallucinated else 'ok' }}">
+        {{ '✗' if s.hallucinated else '✓' }} {{ s.text }}
+        {% if s.reason %}
+          <div class="sentence-reason">{{ s.reason }}</div>
+        {% endif %}
+      </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if d.hallucinated_claims %}
+    <div class="section-title">Hallucinated claims</div>
+    <div style="margin-top:6px">
+      {% for claim in d.hallucinated_claims %}
+        <span class="claim-tag">{{ claim }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+  </div>
+  {% endfor %}
+
+</div>
+</body>
+</html>
